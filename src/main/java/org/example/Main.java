@@ -3,6 +3,8 @@ package org.example;
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("Hello world!");
+        // Initialize the program and start execution
+        FileOrganizer fileOrganizer = new FileOrganizer();
+        fileOrganizer.run();
     }
 }
