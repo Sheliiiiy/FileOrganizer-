@@ -12,7 +12,7 @@ public class FileOrganizer {
         System.out.print("Enter the directory path: ");
         String directoryPath = scanner.nextLine();
         listFilesInDirectory(directoryPath);
-        getCategorizedExtensions(directoryPath);
+        System.out.println(getCategorizedExtensions(directoryPath));
     }
 
     public void listFilesInDirectory(String directoryPath) {
