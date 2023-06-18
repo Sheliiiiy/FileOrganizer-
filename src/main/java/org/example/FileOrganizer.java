@@ -1,6 +1,8 @@
 package org.example;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -10,6 +12,50 @@ public class FileOrganizer {
     public void run() {
         UserInterface userInterface = new UserInterface();
         userInterface.displayMenu();
+    }
+
+    public String renameFile(String filePath, String newFileName) {
+        File file = new File(filePath);
+        return file.exists() ?
+                (file.renameTo(new File(file.getParent(), newFileName)) ?
+                        "File renamed successfully." : "Unable to rename the file.") :
+                "File does not exist.";
+    }
+
+    public String copyFile(String sourceFilePath, String destinationFilePath) {
+        Path sourcePath = Path.of(sourceFilePath);
+        Path destinationPath = Path.of(destinationFilePath);
+
+        try {
+            Files.copy(sourcePath, destinationPath, StandardCopyOption.COPY_ATTRIBUTES);
+            return "File copied successfully.";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Unable to copy the file.";
+        }
+    }
+
+    public String getFileDetails(String filePath) {
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            BasicFileAttributes attributes;
+            try {
+                attributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+                String details = "File Details:\n";
+                details += "Name: " + file.getName() + "\n";
+                details += "Path: " + file.getAbsolutePath() + "\n";
+                details += "Size: " + attributes.size() + " bytes\n";
+                details += "Creation Time: " + attributes.creationTime() + "\n";
+                details += "Last Modified Time: " + attributes.lastModifiedTime() + "\n";
+                return details;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Unable to retrieve file details.";
+            }
+        } else {
+            return "File does not exist.";
+        }
     }
 
     public List<String> searchFiles(String directoryPath, String fileName) {
@@ -33,16 +79,10 @@ public class FileOrganizer {
 
     public String deleteFile(String filePath) {
         File file = new File(filePath);
-
-        if (file.exists()) {
-            if (file.delete()) {
-                return "File deleted successfully.";
-            } else {
-                return "Unable to delete the file.";
-            }
-        } else {
-            return "File does not exist.";
-        }
+        return file.exists() ?
+                (file.delete() ?
+                        "File deleted successfully." : "Unable to delete the file.") :
+                "File does not exist.";
     }
 
     public String moveFile(String sourceFilePath, String destinationFilePath) {

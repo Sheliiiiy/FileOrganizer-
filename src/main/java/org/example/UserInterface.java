@@ -77,6 +77,34 @@ public class UserInterface {
             }
          });
 
+        JButton renameFile = new JButton("Rename File");
+        renameFile.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Rename File Button clicked ------------------------\n");
+            String[] parts = textField.getText().split(",");
+            String filePath = parts[0];
+            String newFileName = parts[1];
+            textResult.setText(textResult.getText() + fileOrganizer.renameFile(filePath, newFileName) + "\n");
+        });
+
+        JButton copyFile = new JButton("Copy File");
+        copyFile.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Copy File Button clicked ------------------------\n");
+            String[] parts = textField.getText().split(",");
+            String sourceFilePath = parts[0];
+            String destinationFilePath = parts[1];
+            textResult.setText(textResult.getText() + fileOrganizer.copyFile(sourceFilePath, destinationFilePath) + "\n");
+        });
+
+        JButton getFileDetails = new JButton("Get File Details");
+        getFileDetails.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Get File Details Button clicked ------------------------\n");
+            String filePath = textField.getText();
+            textResult.setText(textResult.getText() + fileOrganizer.getFileDetails(filePath) + "\n");
+        });
+
         //Add elements to the Frame
         frame.add(label);
         frame.add(textField);
@@ -86,6 +114,9 @@ public class UserInterface {
         frame.add(moveFile);
         frame.add(deleteFile);
         frame.add(searchFiles);
+        frame.add(renameFile);
+        frame.add(copyFile);
+        frame.add(getFileDetails);
         frame.add(scrollPane);
 
         // Set the size and close operation of the frame
