@@ -57,6 +57,7 @@ public class FileOrganizer {
                 }
             }
         }
+        System.out.println(categorizedExtensions);
         return categorizedExtensions;
     }
 

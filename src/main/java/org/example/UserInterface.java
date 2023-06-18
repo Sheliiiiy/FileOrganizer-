@@ -1,11 +1,8 @@
 package org.example;
-import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
 
 public class UserInterface {
     public void displayMenu() {
@@ -19,7 +16,24 @@ public class UserInterface {
 
         // Create a text box
         JTextField textField = new JTextField();
-        textField.setColumns(20);
+        //textField.setColumns((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.03));
+        textField.setPreferredSize(new Dimension(
+                (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.45), 50));
+
+        JTextArea textResult = new JTextArea();
+        //textField.setColumns((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.03));
+        textResult.setPreferredSize(new Dimension(
+                (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.45),
+                (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.3)));
+        textResult.setEditable(false);
+        textResult.setLineWrap(true);
+        textResult.setWrapStyleWord(true);
+
+        // Create a scroll pane to contain the text area
+        JScrollPane scrollPane = new JScrollPane(textResult);
+        scrollPane.setPreferredSize(new Dimension(
+                (int) (frame.getWidth() * 0.45),
+                (int) (frame.getHeight() * 0.3)));
 
         // Create a JButton
         JButton getExtensions = new JButton("Categorized Extensions");
@@ -27,7 +41,7 @@ public class UserInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Define the actions to be performed when the button is clicked
-                System.out.println("Button clicked!");
+                textResult.setText(textResult.getText() + "\nCategorized Extensions Button clicked!");
                 fileOrganizer.getCategorizedExtensions(textField.getText());
             }
         });
@@ -39,7 +53,7 @@ public class UserInterface {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Define the actions to be performed when the button is clicked
-                System.out.println("Button clicked!");
+                textResult.setText(textResult.getText() + "\nList Files In Directory Button clicked!");
                 fileOrganizer.listFilesInDirectory(textField.getText());//Get the entered text
             }
         });
@@ -49,6 +63,7 @@ public class UserInterface {
         frame.add(textField);
         frame.add(getExtensions);
         frame.add(listFiles);
+        frame.add(textResult);
 
         // Set the size and close operation of the frame
         frame.setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.5),
