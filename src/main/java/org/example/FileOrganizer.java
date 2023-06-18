@@ -1,17 +1,28 @@
 package org.example;
 import java.io.File;
 import java.util.HashMap;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileOrganizer {
     public void run() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the directory path: ");
-        String directoryPath = scanner.nextLine();
-        listFilesInDirectory(directoryPath);
-        System.out.println(getCategorizedExtensions(directoryPath));
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Enter the directory path: ");
+//        String directoryPath = scanner.nextLine();
+//        listFilesInDirectory(directoryPath);
+//        System.out.println(getCategorizedExtensions(directoryPath));
+//        createDirectory(directoryPath);
+    }
+
+    public String createDirectory(String directoryPath) {
+        File directory = new File(directoryPath);
+        boolean created = directory.mkdir();
+
+        if (created) {
+            return "Directory created: " + directory.getAbsolutePath();
+        } else {
+            return "Failed to create directory: " + directory.getAbsolutePath();
+        }
     }
 
     public List<String> listFilesInDirectory(String directoryPath) {
@@ -58,7 +69,6 @@ public class FileOrganizer {
                 }
             }
         }
-        System.out.println(categorizedExtensions);
         return categorizedExtensions;
     }
 

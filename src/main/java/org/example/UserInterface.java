@@ -1,8 +1,7 @@
 package org.example;
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class UserInterface {
     public void displayMenu() {
@@ -27,24 +26,30 @@ public class UserInterface {
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.45),
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.3)));
 
-        // Create a JButton
+        // Create a JButtons
         JButton getExtensions = new JButton("Categorized Extensions");
         getExtensions.addActionListener(e -> {
             // Define the actions to be performed when the button is clicked
-            textResult.setText(textResult.getText() + "\nCategorized Extensions Button clicked!");
-            fileOrganizer.getCategorizedExtensions(textField.getText());
+            textResult.setText(textResult.getText() + "------------------------ Categorized Extensions Button clicked ------------------------\n");
+            for (Map.Entry<String, String> entry : fileOrganizer.getCategorizedExtensions(textField.getText()).entrySet()) {
+                textResult.setText(textResult.getText() + " " + entry.getKey() + " " + entry.getValue() + "\n");
+            }
         });
 
-        // Create a JButton
         JButton listFiles = new JButton("List Files In Directory");
-
         listFiles.addActionListener(e -> {
             // Define the actions to be performed when the button is clicked
-            textResult.setText(textResult.getText() + "\nList Files In Directory Button clicked!");
-            List<String> toPrint = new ArrayList<>(fileOrganizer.listFilesInDirectory(textField.getText()));
-            for (String str : toPrint) {
-                textResult.setText(textResult.getText() + "\n" + str);
+            textResult.setText(textResult.getText() + "------------------------ List Files In Directory Button clicked ------------------------\n");
+            for (String str : fileOrganizer.listFilesInDirectory(textField.getText())) {
+                textResult.setText(textResult.getText() + str + "\n");
             }
+        });
+
+        JButton createDirectory = new JButton("Create Directory");
+        createDirectory.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Create Directory Button clicked ------------------------\n");
+            textResult.setText(textResult.getText() + fileOrganizer.createDirectory(textField.getText()) + "\n");
         });
 
         //Add elements to the Frame
@@ -52,14 +57,13 @@ public class UserInterface {
         frame.add(textField);
         frame.add(getExtensions);
         frame.add(listFiles);
+        frame.add(createDirectory);
         frame.add(scrollPane);
 
         // Set the size and close operation of the frame
         frame.setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.5),
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.5));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Make the frame visible
         frame.setVisible(true);
     }
 }
