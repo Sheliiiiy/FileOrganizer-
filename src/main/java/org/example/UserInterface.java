@@ -16,15 +16,14 @@ public class UserInterface {
 
         // Create a text box
         JTextField textField = new JTextField();
-        //textField.setColumns((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.03));
         textField.setPreferredSize(new Dimension(
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.45), 50));
 
-        JTextArea textResult = new JTextArea();
-        //textField.setColumns((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.03));
-        textResult.setPreferredSize(new Dimension(
-                (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.45),
-                (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.3)));
+        AutoExpandingTextArea textResult = new AutoExpandingTextArea();
+        textResult.setColumns((int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.03));
+//        textResult.setPreferredSize(new Dimension(
+//                (int) (Toolkit.getDefaultToolkit().getScreenSize().width * 0.45),
+//                (int) (Toolkit.getDefaultToolkit().getScreenSize().height * 0.3)));
         textResult.setEditable(false);
         textResult.setLineWrap(true);
         textResult.setWrapStyleWord(true);
