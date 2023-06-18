@@ -52,12 +52,21 @@ public class UserInterface {
             textResult.setText(textResult.getText() + fileOrganizer.createDirectory(textField.getText()) + "\n");
         });
 
+        JButton moveFile = new JButton("Move File");
+        moveFile.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Move File Button clicked ------------------------\n");
+            String[] parts = textField.getText().split(",");
+            textResult.setText(textResult.getText() + fileOrganizer.moveFile(parts[0], parts[1]) + "\n");
+        });
+
         //Add elements to the Frame
         frame.add(label);
         frame.add(textField);
         frame.add(getExtensions);
         frame.add(listFiles);
         frame.add(createDirectory);
+        frame.add(moveFile);
         frame.add(scrollPane);
 
         // Set the size and close operation of the frame

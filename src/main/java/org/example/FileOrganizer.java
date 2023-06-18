@@ -1,5 +1,8 @@
 package org.example;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,21 @@ public class FileOrganizer {
 //        listFilesInDirectory(directoryPath);
 //        System.out.println(getCategorizedExtensions(directoryPath));
 //        createDirectory(directoryPath);
+    }
+
+    public String moveFile(String sourceFilePath, String destinationFilePath) {
+        File sourceFile = new File(sourceFilePath);
+        File destinationFile = new File(destinationFilePath);
+
+        try {
+            Path sourcePath = sourceFile.toPath();
+            Path destinationPath = destinationFile.toPath();
+            Files.move(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+            return "File moved successfully from " + sourceFilePath + " to " + destinationFilePath;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Failed to move file from " + sourceFilePath + " to " + destinationFilePath;
+        }
     }
 
     public String createDirectory(String directoryPath) {
