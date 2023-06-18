@@ -1,6 +1,8 @@
 package org.example;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserInterface {
     public void displayMenu() {
@@ -39,7 +41,10 @@ public class UserInterface {
         listFiles.addActionListener(e -> {
             // Define the actions to be performed when the button is clicked
             textResult.setText(textResult.getText() + "\nList Files In Directory Button clicked!");
-            fileOrganizer.listFilesInDirectory(textField.getText());//Get the entered text
+            List<String> toPrint = new ArrayList<>(fileOrganizer.listFilesInDirectory(textField.getText()));
+            for (String str : toPrint) {
+                textResult.setText(textResult.getText() + "\n" + str);
+            }
         });
 
         //Add elements to the Frame

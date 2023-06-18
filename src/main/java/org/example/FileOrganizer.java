@@ -1,10 +1,9 @@
 package org.example;
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileOrganizer {
     public void run() {
@@ -15,7 +14,8 @@ public class FileOrganizer {
         System.out.println(getCategorizedExtensions(directoryPath));
     }
 
-    public void listFilesInDirectory(String directoryPath) {
+    public List<String> listFilesInDirectory(String directoryPath) {
+        List<String> fileNamesList = new ArrayList<>();
         File directory = new File(directoryPath);
 
         // Check if the directory exists
@@ -24,18 +24,19 @@ public class FileOrganizer {
 
             // Check if any files exist in the directory
             if (files != null && files.length > 0) {
-                System.out.println("Files in the directory:");
+                fileNamesList.add("Files in the directory:");
                 for (File file : files) {
                     if (file.isFile()) {
-                        System.out.println(file.getName());
+                        fileNamesList.add(file.getName());
                     }
                 }
             } else {
-                System.out.println("The directory is empty.");
+                fileNamesList.add("The directory is empty.");
             }
         } else {
-            System.out.println("The specified directory does not exist.");
+            fileNamesList.add("The specified directory does not exist.");
         }
+        return fileNamesList;
     }
 
     public HashMap<String, String> getCategorizedExtensions(String directoryPath) {
