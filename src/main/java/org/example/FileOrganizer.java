@@ -1,20 +1,48 @@
 package org.example;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileOrganizer {
     public void run() {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Enter the directory path: ");
-//        String directoryPath = scanner.nextLine();
-//        listFilesInDirectory(directoryPath);
-//        System.out.println(getCategorizedExtensions(directoryPath));
-//        createDirectory(directoryPath);
+        UserInterface userInterface = new UserInterface();
+        userInterface.displayMenu();
+    }
+
+    public List<String> searchFiles(String directoryPath, String fileName) {
+        List<String> filePaths = new ArrayList<>();
+        searchFilesRecursive(new File(directoryPath), fileName, filePaths);
+        return filePaths.isEmpty()? new ArrayList<>(Collections.singletonList("Not Found")) : filePaths;
+    }
+
+    private void searchFilesRecursive(File directory, String fileName, List<String> filePaths) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    searchFilesRecursive(file, fileName, filePaths); // Recursively search subdirectories
+                } else if (file.getName().equals(fileName)) {
+                    filePaths.add(file.getAbsolutePath()); // Found a matching file
+                }
+            }
+        }
+    }
+
+    public String deleteFile(String filePath) {
+        File file = new File(filePath);
+
+        if (file.exists()) {
+            if (file.delete()) {
+                return "File deleted successfully.";
+            } else {
+                return "Unable to delete the file.";
+            }
+        } else {
+            return "File does not exist.";
+        }
     }
 
     public String moveFile(String sourceFilePath, String destinationFilePath) {

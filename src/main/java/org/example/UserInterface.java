@@ -60,6 +60,23 @@ public class UserInterface {
             textResult.setText(textResult.getText() + fileOrganizer.moveFile(parts[0], parts[1]) + "\n");
         });
 
+        JButton deleteFile = new JButton("Delete File");
+        deleteFile.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Move File Button clicked ------------------------\n");
+            textResult.setText(textResult.getText() + fileOrganizer.deleteFile(textField.getText()) + "\n");
+        });
+
+        JButton searchFiles = new JButton("Search Files");
+        searchFiles.addActionListener(e -> {
+            // Define the actions to be performed when the button is clicked
+            textResult.setText(textResult.getText() + "------------------------ Search Files Button clicked ------------------------\n");
+            String[] parts = textField.getText().split(",");
+            for (String filePath : fileOrganizer.searchFiles(parts[0], parts[1])) {
+                textResult.setText(textResult.getText() + filePath + "\n");
+            }
+         });
+
         //Add elements to the Frame
         frame.add(label);
         frame.add(textField);
@@ -67,6 +84,8 @@ public class UserInterface {
         frame.add(listFiles);
         frame.add(createDirectory);
         frame.add(moveFile);
+        frame.add(deleteFile);
+        frame.add(searchFiles);
         frame.add(scrollPane);
 
         // Set the size and close operation of the frame
